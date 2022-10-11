@@ -5,6 +5,7 @@
 {%  block content %}
 
 <div class="header-bar">
+
     <div>
 
         <h1>Hello {{request.user|title}}</h1>
@@ -21,6 +22,12 @@
 {% endif %}
 <br>
 <br>
+
+<form method="GET">
+    <input type="text" name="search-area" , value="{{search_input}}">
+    <input type="submit" value="Search">
+
+    </form>
 
 
 <table border="1">

@@ -32,6 +32,15 @@ class ToTaskList( LoginRequiredMixin,ListView):
         context['count'] = context['task'].filter(complete=False).count()
 
 
+        search_input = self.request.GET.get('search-area') or '' # we are applying a search functionality to the page..
+
+        if search_input:
+            context['task'] = context['task'].filter(title__icontains = search_input)
+
+        context['search_input'] = search_input  # search functionality ends here..
+
+
+
         return context
 
 class ToTaskDetail(DetailView):
