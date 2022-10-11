@@ -14,6 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class ToTaskLogin(LoginView):
     template_name = 'ToDos/login.html'
     fields = '__all__'
+   
 
 
     def get_success_url(self):
@@ -23,6 +24,15 @@ class ToTaskLogin(LoginView):
 class ToTaskList( LoginRequiredMixin,ListView):
     model = ToTask
     context_object_name = 'task'
+    fields = ['title', 'description','complete'] 
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['task'] = context['task'].filter(user=self.request.user)
+        context['count'] = context['task'].filter(complete=False).count()
+
+
+        return context
 
 class ToTaskDetail(DetailView):
     model = ToTask
